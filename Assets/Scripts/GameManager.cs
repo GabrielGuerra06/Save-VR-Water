@@ -43,6 +43,7 @@ namespace DefaultNamespace
         public float total_water = 10.0f;
         public float waterUsed = 0.0f;
         public float waterPercentage = 0.0f;
+        public float remainingTrees;
 
         private void Start()
         {
@@ -66,6 +67,7 @@ namespace DefaultNamespace
 
         private void Update()
         {
+            remainingTrees = GameObject.FindGameObjectsWithTag("Tree").Length - GetTreeCountByState(Tree.TreeState.Watered);
             if (Input.GetKeyDown(KeyCode.F))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -73,19 +75,17 @@ namespace DefaultNamespace
 
             if (!hasGameEnded)
             {
-                if (GetTreeCountByState(Tree.TreeState.Watered) == GameObject.FindGameObjectsWithTag("Tree").Length)
+                if (remainingTrees == 0)
                 {
                     ShowGameStatus(true);
+                    StartCoroutine(StartAfterDelay());
                     hasGameEnded = true; 
-                    Time.timeScale = 0;
-                    StartAfterDelay();
                 }
-                else if (waterUsed > total_water * 1.1f)
+                else if (waterUsed > total_water)
                 {
                     ShowGameStatus(false);
+                    StartCoroutine(StartAfterDelay());
                     hasGameEnded = true;
-                    Time.timeScale = 0;  // Stop time (pause the game)
-                    StartAfterDelay();
                 }
             }
 
@@ -180,7 +180,7 @@ namespace DefaultNamespace
         // Coroutine to handle the delay and stop time
         public IEnumerator StartAfterDelay()
         {
-            yield return new WaitForSeconds(1);  // Wait for 5 seconds
+            yield return new WaitForSeconds(3);  // Wait for 5 seconds
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

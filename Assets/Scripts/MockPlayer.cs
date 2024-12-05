@@ -25,12 +25,10 @@ namespace DefaultNamespace
                 if (dynamicWater.isWatering)
                 {
                     currentTree.isBeingWatered = true;
-                    Debug.Log("Watering " + currentTree.name);
                 }
                 else
                 {
                     currentTree.isBeingWatered = false;
-                    Debug.Log("Not watering " + currentTree.name);
                 }
             }
         }
@@ -41,7 +39,6 @@ namespace DefaultNamespace
             {
                 GameManager.Instance.progressBar.transform.parent.gameObject.SetActive(true);
                 currentTree = other.GetComponent<Tree>();
-                Debug.Log("Entered tree trigger: " + currentTree.name);
             }
         }
         
@@ -52,7 +49,6 @@ namespace DefaultNamespace
                 if (currentTree == other.GetComponent<Tree>())
                 {
                     GameManager.Instance.progressBar.transform.parent.gameObject.SetActive(false);
-                    Debug.Log("Exited tree trigger: " + currentTree.name);
                     currentTree.isBeingWatered = false;
                     currentTree = null;
                 }

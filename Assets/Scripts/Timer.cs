@@ -14,20 +14,8 @@ public class Timer : MonoBehaviour
     void Update()
     {
         elapsedTime += Time.deltaTime;
-        int minutes = Mathf.FloorToInt(remainingTime() / 60);
-        int seconds = Mathf.FloorToInt(remainingTime() % 60);
+        int minutes = Mathf.FloorToInt(elapsedTime / 60);
+        int seconds = Mathf.FloorToInt(elapsedTime % 60);
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-        if(remainingTime() < 0)
-        {
-            GameManager.Instance.ShowGameStatus(false);
-            Time.timeScale = 0;  
-            GameManager.Instance.StartAfterDelay();
-        }
-        
-    }
-
-    public float remainingTime()
-    {
-        return totalTime - elapsedTime;
     }
 }
