@@ -23,13 +23,14 @@ public class Tree : MonoBehaviour
     private Vector3 initialPosition;
     [SerializeField] private float idealWateringTime = 10.0f;
 
-    [Header("Indicator Prefabs")] 
     [SerializeField] private GameObject notWateredIndicatorPrefab;
     [SerializeField] private GameObject wateredIndicatorPrefab;
     [SerializeField] private GameObject overWateredIndicatorPrefab;
+    
+
 
     private GameObject currentIndicator;
-    [SerializeField] private float indicatorYPosition = 0.05f; // Y position for all indicators
+    [SerializeField] private float indicatorYPosition = 0.05f; 
     private GameObject player;
 
     private void Start()
@@ -47,7 +48,6 @@ public class Tree : MonoBehaviour
             wateringTime += Time.deltaTime;
             float waterPercentage = wateringTime / idealWateringTime;
 
-            // Update the progress bar scale
             Vector3 currentScale = GameManager.Instance.progressBar.gameObject.transform.localScale;
             currentScale.x = waterPercentage;
             GameManager.Instance.progressBar.gameObject.transform.localScale = currentScale;
@@ -72,18 +72,15 @@ public class Tree : MonoBehaviour
             CurrentState = TreeState.OverWatered;
         }
 
-        Debug.Log($"Tree {gameObject.name} state updated to: {CurrentState}");
     }
 
     private void UpdateTreeVisual()
     {
-        // Destroy the existing indicator
         if (currentIndicator != null)
         {
             Destroy(currentIndicator);
         }
 
-        // Determine the prefab to instantiate
         GameObject prefabToInstantiate = null;
         Vector3 indicatorPosition = Vector3.zero;
         Vector3 vectToPlayer = player.transform.position - transform.position;
@@ -97,28 +94,23 @@ public class Tree : MonoBehaviour
             case TreeState.Watered:
                 indicatorPosition = this.transform.position + vectToPlayer*0.5f;
                 prefabToInstantiate = wateredIndicatorPrefab;
+                GameManager.Instance.successAudioSource.clip = GameManager.Instance.successMusicClip;
+                GameManager.Instance.successAudioSource.Play();
                 break;
             case TreeState.OverWatered:
                 indicatorPosition = this.transform.position + vectToPlayer*0.5f;
                 prefabToInstantiate = overWateredIndicatorPrefab;
+                GameManager.Instance.failAudioSource.clip = GameManager.Instance.failMusicClip;
+                GameManager.Instance.failAudioSource.Play();
                 break;
         }
 
-        // Instantiate the indicator at the correct position
         if (prefabToInstantiate != null)
         {
-
             currentIndicator = Instantiate(prefabToInstantiate, indicatorPosition, Quaternion.identity, transform);
-
-            // Debug log for position
-            Debug.Log($"Instantiated {CurrentState} indicator at position {indicatorPosition}");
+            
         }
     }
 
-    public void ResetTree()
-    {
-        CurrentState = TreeState.NotWatered;
-        wateringTime = 0;
-        UpdateTreeVisual();
-    }
+
 }

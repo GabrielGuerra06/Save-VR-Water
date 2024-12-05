@@ -5,25 +5,19 @@ namespace DefaultNamespace
 {
     public class MockPlayer: MonoBehaviour
     {
-        [Header("Movement Settings")]
-        public float moveSpeed = 5f; // Movement speed
+        public float moveSpeed = 5f; 
 
-        [Header("Watering Settings")]
-        public int waterAmountPerUse = 5; // Amount of water applied per use
+        public int waterAmountPerUse = 5; 
         [SerializeField]
         private DynamicWater dynamicWater;
 
-        // Reference to the current tree being interacted with
         private Tree currentTree;
 
         private void Update()
         {
             HandleWatering();
         }
-
-        /// <summary>
-        /// Handles watering when the player is within a tree's trigger collider.
-        /// </summary>
+        
         private void HandleWatering()
         {
             if (currentTree != null)
@@ -40,10 +34,7 @@ namespace DefaultNamespace
                 }
             }
         }
-
-        /// <summary>
-        /// Called when the player enters a trigger collider.
-        /// </summary>
+        
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Tree"))
@@ -53,10 +44,7 @@ namespace DefaultNamespace
                 Debug.Log("Entered tree trigger: " + currentTree.name);
             }
         }
-
-        /// <summary>
-        /// Called when the player exits a trigger collider.
-        /// </summary>
+        
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Tree"))

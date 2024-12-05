@@ -120,7 +120,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBeingWatered: 0
   wateringTime: 0
-  idealWateringTime: 3
+  scaleSpeed: 1
+  minHeight: 0
+  idealWateringTime: 5
   notWateredIndicatorPrefab: {fileID: 412715506896931840, guid: 4960314540b457744a0b3c4a18eb7cda, type: 3}
   wateredIndicatorPrefab: {fileID: 6400778677685515839, guid: bd7a5eb1281383a459648ed0d8e03a6a, type: 3}
   overWateredIndicatorPrefab: {fileID: 2261716585202338507, guid: 9b17f4884430a65458f1576ce212f318, type: 3}
+  indicatorYPosition: 0.5

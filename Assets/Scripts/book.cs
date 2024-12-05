@@ -20,7 +20,6 @@ public class book : MonoBehaviour
     {
         for (int i = 0; i < pages.Count; i++)
         {
-            // Reset rotation relative to parent
             pages[i].localRotation = Quaternion.identity;
         }
         if (pages.Count > 0)
@@ -39,7 +38,7 @@ public class book : MonoBehaviour
         if (index >= pages.Count - 1) return;
 
         index++;
-        float angle = 180f; // Rotate 180 degrees around the local Y axis
+        float angle = 180f; 
         pages[index].SetAsLastSibling();
         StartCoroutine(Rotate(angle, true));
     }
@@ -50,7 +49,7 @@ public class book : MonoBehaviour
         if (rotate) { return; }
         if (index < 0) return;
 
-        float angle = 0f; // Reset rotation to 0 degrees around the local Y axis
+        float angle = 0f; 
         pages[index].SetAsLastSibling();
         StartCoroutine(Rotate(angle, false));
     }
@@ -68,16 +67,12 @@ public class book : MonoBehaviour
             pages[index].localRotation = Quaternion.Slerp(initialRotation, targetRotation, elapsed);
             yield return null;
         }
-
-        // Ensure final rotation is exactly the target rotation
         pages[index].localRotation = targetRotation;
 
         if (!forward)
         {
             index--;
         }
-
-        // Update button states
         backButton.SetActive(index >= 0);
         forwardButton.SetActive(index < pages.Count - 1);
 
