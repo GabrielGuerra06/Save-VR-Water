@@ -1,48 +1,73 @@
-﻿using System;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-
-namespace DefaultNamespace
+namespace DefaultNamespace 
 {
-    public class MockPlayer : AbstractPlayer
+    public class MockPlayer: MonoBehaviour
     {
-        public override void HideBook()
-        {
-            _book.SetActive(false);
-        }
+        [Header("Movement Settings")]
+        public float moveSpeed = 5f; // Movement speed
 
-        public override void ShowBook()
-        {
-            _book.SetActive(true);
-        }
+        [Header("Watering Settings")]
+        public int waterAmountPerUse = 5; // Amount of water applied per use
+        [SerializeField]
+        private DynamicWater dynamicWater;
 
-        public override void TurnForwardPage()
-        {
-            Debug.Log(bookScript);
-            bookScript.RotateForward();
-        }
+        // Reference to the current tree being interacted with
+        private Tree currentTree;
 
-        public override void TurnBackPage()
-        {
-            bookScript.RotateBack();
-        }
-        
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.H)) // Press 'H' to hide the book
+            HandleWatering();
+        }
+
+        /// <summary>
+        /// Handles watering when the player is within a tree's trigger collider.
+        /// </summary>
+        private void HandleWatering()
+        {
+            if (currentTree != null)
             {
-                HideBook();
+                if (dynamicWater.isWatering)
+                {
+                    currentTree.isBeingWatered = true;
+                    Debug.Log("Watering " + currentTree.name);
+                }
+                else
+                {
+                    currentTree.isBeingWatered = false;
+                    Debug.Log("Not watering " + currentTree.name);
+                }
             }
-            if (Input.GetKeyDown(KeyCode.S)) // Press 'S' to show the book
+        }
+
+        /// <summary>
+        /// Called when the player enters a trigger collider.
+        /// </summary>
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Tree"))
             {
-                ShowBook();
+                GameManager.Instance.progressBar.transform.parent.gameObject.SetActive(true);
+                currentTree = other.GetComponent<Tree>();
+                Debug.Log("Entered tree trigger: " + currentTree.name);
             }
-            if (Input.GetKeyDown(KeyCode.D)) // Press 'D' to turn the page forward
+        }
+
+        /// <summary>
+        /// Called when the player exits a trigger collider.
+        /// </summary>
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Tree"))
             {
-                TurnForwardPage();
-            }
-            if (Input.GetKeyDown(KeyCode.A)) // Press 'A' to turn the page back
-            {
-                TurnBackPage();
+                if (currentTree == other.GetComponent<Tree>())
+                {
+                    GameManager.Instance.progressBar.transform.parent.gameObject.SetActive(false);
+                    Debug.Log("Exited tree trigger: " + currentTree.name);
+                    currentTree.isBeingWatered = false;
+                    currentTree = null;
+                }
             }
         }
     }

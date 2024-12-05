@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1626665891860606362}
   - component: {fileID: 3564567543337752912}
   - component: {fileID: 8468285090874280606}
+  - component: {fileID: -9198900394929562318}
   m_Layer: 0
   m_Name: japanese deciduous tree
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3059948811161385093}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1626665891860606362
 MeshFilter:
@@ -92,8 +93,34 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3059948811161385093}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 1.8880078, y: 3.4203942, z: 1.9332283}
   m_Center: {x: 0, y: 1.7101971, z: 0.00000029802322}
+--- !u!114 &-9198900394929562318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3059948811161385093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6a5400072969a74ab7dac230e2a0789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBeingWatered: 0
+  wateringTime: 0
+  idealWateringTime: 4
+  notWateredIndicatorPrefab: {fileID: 412715506896931840, guid: 4960314540b457744a0b3c4a18eb7cda, type: 3}
+  wateredIndicatorPrefab: {fileID: 6400778677685515839, guid: bd7a5eb1281383a459648ed0d8e03a6a, type: 3}
+  overWateredIndicatorPrefab: {fileID: 2261716585202338507, guid: 9b17f4884430a65458f1576ce212f318, type: 3}
